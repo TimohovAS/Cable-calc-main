@@ -1,0 +1,119 @@
+CABLE CALCULATION PROGRAM — USER GUIDE (IEC 60364)
+
+This program calculates cable line parameters according to IEC 60364-5-52 and
+checks compliance with IEC 60364-4-43. It supports copper (Cu) and aluminium
+(Al) conductors, PVC and XLPE/EPR insulation, and installation methods A1–G.
+
+
+
+  1. OVERVIEW
+
+
+  • Permissible current (Iz) allowing for installation method, temperature,
+    and cable grouping.
+
+  • Voltage drop (ΔU) on the segment and total drop along the circuit.
+    Total drop is summed only for sequential segments: when the current
+    segment’s “From” matches another row’s “To” in the same circuit
+    (continuation of the run). Otherwise the segment is treated as a
+    parallel branch.
+
+  • Automatic selection of minimum cross-section and protective device
+    rating (In) via “Select parameters”.
+
+  • Protection check: Icalc ≤ In ≤ Iz and I2 ≤ 1.45×Iz.
+
+
+
+  2. WORKFLOW
+
+
+  Step 1. “Calculation” tab — “Input data” section
+    • Circuit — circuit number or name (1, 2, 3 or “house”, “plant”, etc.).
+    • Section FROM / TO — start and end of the segment (e.g. “house” → “plant”).
+    • Fill in power (Pi), Kj, η, U, cos φ, length (L), choose cross-section,
+      installation method, loaded cores (nž), environment and temperature.
+
+  Step 2. Intermediate results
+    Updated automatically when fields change. Check: Icalc, Iz, ΔU %,
+    Total ΔU %, Current OK, ΔU OK, Protection, IEC compliance.
+
+  Step 3. Select parameters (optional)
+    Click “Select parameters” — the program picks minimum cross-section
+    and In that satisfy current and ΔU limits.
+
+  Step 4. Add to table
+    “Calculate and add row” — saves the current calculation to the results
+    table. Repeat for other segments and circuits.
+
+  Step 5. Edit and export
+    • Double-click a table row or use “Load row to form” — load the selected
+      row into the form for editing.
+    • “Delete selected row” — remove the entry.
+    • “Save project” (File) — save form and table to JSON.
+    • “Export to Excel” — export the table with header and column notes to xlsx.
+
+
+
+  3. COEFFICIENTS AND PARAMETERS
+
+
+  S (Kn)     Grouping factor. Accounts for mutual heating of cables. Depends
+             on the number of cables in the group; when n∥ > 1, parallel
+             cables are included in S automatically.
+
+  T (Kt)     Temperature factor (air or soil). From IEC 60364-5-52 tables
+             by insulation type, environment and temperature.
+
+  η          Installation efficiency, 0 to 1. From equipment data.
+
+  Kj         Demand (diversity) factor for a group of loads.
+
+  ΔU, key    Permissible voltage drop set by key:
+             UIDM 5%, SVDM 3%, SVTS 5%, UITS 8%.
+
+  cos φ      Load power factor, in (0, 1].
+
+  In, k      Protective device: nominal current In and ratio k (I2/In).
+
+  n∥         Number of parallel cables: current shared (Icalc/n∥), segment
+             resistance reduced (R/n∥, X/n∥).
+
+  Voltage    • 230 V — only with “Loaded cores” = 2 (single-phase).
+             • 400 V — with “Loaded cores” = 3 (three-phase). Otherwise
+               the program shows a warning.
+
+
+
+  4. INSTALLATION METHODS (IEC 60364-5-52)
+
+
+  A1   Multi-core cables in conduit in a thermally insulating wall (low
+       thermal conductivity).
+  A2   Multi-core cables in conduit in a normal wall or masonry.
+  B1   Single-core cables in conduit in a thermally insulating wall.
+  B2   Single-core cables in conduit in a normal wall or masonry.
+  C    Multi-core or single-core cables on a surface (wall, ceiling)
+       without conduit. Often the default.
+  D    Cables in the ground (trench or conduit underground).
+  E    Multi-core cables in free air (open run).
+  F    Single-core cables in free air, spacing between cables ≥ diameter.
+  G    Single-core cables in free air, minimum spacing or touching.
+
+ Method choice strongly affects Iz; wrong method leads to inaccurate results.
+
+
+  5. NOTES AND TIPS
+
+  • If temperature is outside IEC table ranges, the program warns; results
+    may be approximate.
+
+  • When current (Icalc > Iz) or ΔU limits are not met, the “Recommendations”
+    field shows hints for changing cross-section or other parameters.
+
+  • Check inputs: empty or invalid fields produce dashes or errors.
+
+  • Interface language (Russian, Serbian, English) is set in the “Language”
+    menu. Help text updates automatically.
+
+  • Hovering over field labels shows tooltips with parameter descriptions.

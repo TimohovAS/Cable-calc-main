@@ -1,0 +1,110 @@
+UPUTSTVO ZA PROGRAM ZA PRORAČUN KABLOVA (IEC 60364)
+
+Program služi za proračun parametara kablovskih linija prema IEC 60364-5-52
+i proveru usaglašenosti sa IEC 60364-4-43. Podržava bakarne (Cu) i aluminijumske
+(Al) provodnike, izolaciju PVC i XLPE/EPR i metode polaganja A1–G.
+
+
+  1. OPŠTI OPIS
+
+  • Proračun dopustive struje (Iz) uz način polaganja, temperaturu i
+    grupisanje kablova.
+
+  • Proračun pada napona (ΔU) na deonici i ukupnog pada u kolu. Ukupni pad
+    se sabira samo za uzastopne deonice: kada polje «Od» trenutne deonice
+    odgovara polju «Do» prethodnog reda u istom kolu (nastavak trase).
+    Inače se deonica tretira kao paralelna grana.
+
+  • Automatski odabir minimalnog preseka i nazivne struje zaštite (In)
+    dugmetom «Odaberi parametre».
+
+  • Provera zaštite: Icalc ≤ In ≤ Iz i I2 ≤ 1,45×Iz.
+
+
+  2. RADNI TOK
+
+  Korak 1. Kartica «Proračun» — blok «Unos podataka»
+    • Krug — broj ili naziv kruga (1, 2, 3 ili «kuća», «fabrika» itd.).
+    • Deonica OD / DO — početak i kraj deonice (npr. «kuća» → «fabrika»).
+    • Popunite snagu (Pi), Kj, η, U, cos φ, dužinu (L), izaberite presek,
+      način polaganja, broj opterećenih žica (nž), sredinu i temperaturu.
+
+  Korak 2. Pomedurezultati
+    Ažuriraju se automatski pri promeni polja. Pogledajte: Icalc, Iz, ΔU %,
+    Ukupni ΔU %, Po struji, Po ΔU, Zaštita, IEC usaglašenost.
+
+  Korak 3. Odabir parametara (po želji)
+    Kliknite «Odaberi parametre» — program bira minimalni presek i In koji
+    zadovoljavaju struju i dozvoljeni ΔU.
+
+  Korak 4. Dodavanje u tabelu
+    «Izračunaj i dodaj red» — upisuje trenutni proračun u tabelu rezultata.
+    Ponavljajte za ostale deonice i krugove.
+
+  Korak 5. Uređivanje i izvoz
+    • Dvostruki klik na red tabele ili dugme «Učitaj red u formu» —
+      učitavanje izabranog reda u formu za izmenu.
+    • «Obriši izabrani red» — uklanjanje unosa.
+    • «Sačuvaj projekat» (Fajl) — čuvanje forme i tabele u JSON.
+    • «Izvoz u Excel» — izvoz tabele sa zaglavljem i objašnjenjima u xlsx.
+
+
+  3. KOEFICIJENTI I PARAMETRI
+
+  S (Kn)     Koeficijent grupisanja. Uzima u obzir međusobno zagrevanje
+             kablova. Zavisi od broja kablova u grupi; pri n∥ > 1 paralelni
+             kablovi se automatski uključuju u S.
+
+  T (Kt)     Temperaturni koeficijent (vazduh ili tlo). Iz tabela
+             IEC 60364-5-52 prema tipu izolacije, sredini i temperaturi.
+
+  η          Efikasnost postrojenja, od 0 do 1. Prema podacima opreme.
+
+  Kj         Koeficijent istovremenosti za grupu potrošača.
+
+  ΔU, ključ  Dozvoljeni pad napona zadat ključem:
+             UIDM 5%, SVDM 3%, SVTS 5%, UITS 8%.
+
+  cos φ      Faktor snage opterećenja, u opsegu (0; 1].
+
+  In, k      Zaštitni uređaj: nazivna struja In i odnos k (I2/In).
+
+  n∥         Broj paralelnih kablova: struja se deli (Icalc/n∥), otpornost
+             deonice se smanjuje (R/n∥, X/n∥).
+
+  Napon      • 230 V — samo uz «Opterećene žice» = 2 (jednofazni sistem).
+             • 400 V — uz «Opterećene žice» = 3 (trofazni). Inače program
+               prikazuje upozorenje.
+
+
+  4. METODE POLAGANJA (IEC 60364-5-52)
+
+  A1   Višežilni kablovi u cevi u toplotno izolovanom zidu (niska
+       toplotna provodnost).
+  A2   Višežilni kablovi u cevi u običnom zidu ili zidanju.
+  B1   Jednožilni kablovi u cevi u toplotno izolovanom zidu.
+  B2   Jednožilni kablovi u cevi u običnom zidu ili zidanju.
+  C    Višežilni ili jednožilni kablovi na površini (zid, plafon) bez
+       cevi. Često podrazumevana vrednost.
+  D    Kablovi u tlu (rov ili cev u zemlji).
+  E    Višežilni kablovi u slobodnom vazduhu (otvorena trasa).
+  F    Jednožilni kablovi u vazduhu, rastojanje između kablova ≥ prečnik.
+  G    Jednožilni kablovi u vazduhu, minimalno rastojanje ili u dodiru.
+
+ Izbor metode značajno utiče na Iz; pogrešan izbor daje neprecizne rezultate.
+
+
+  5. NAPOMENE I SAVETI
+
+  • Ako temperatura izlazi iz opsega tabela IEC, program upozorava; rezultat
+    može biti približan.
+
+  • Kada uslov struje (Icalc > Iz) ili ΔU nije ispunjen, u polju «Preporuke»
+    prikazuju se saveti za promenu preseka ili drugih parametara.
+
+  • Proverite unose: prazna ili neispravna polja daju crtice ili greške.
+
+  • Jezik interfejsa (srpski, ruski, engleski) menja se u meniju «Jezik».
+    Tekst pomoći se ažurira automatski.
+
+  • Prelazak kursora preko oznaka polja prikazuje tooltip sa objašnjenjima.
